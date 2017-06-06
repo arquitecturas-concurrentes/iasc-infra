@@ -1,4 +1,6 @@
-## Apache AB
+## Métricas
+
+### Apache AB
 
 
 ``` bash
@@ -52,9 +54,6 @@ $ puma -p 4567 -w 4
 # Total:          1   24  10.5     21      61
 
 
-# probar matar que pasa si matás uno de los procesos
-$ kill ...
-#
 # starting server
 # [12711] - Worker 3 (pid: 12984) booted, phase: 0
 
@@ -72,6 +71,40 @@ $ kill ...
 # sacar conclusiones. Mirar https://github.com/igrigorik/em-http-request
 ```
 
-## Siege
+### Siege
 
 Mirar https://www.joedog.org/siege-manual/
+
+## Monitoreo
+
+1. Probar levantar el servidor y matarlo con
+2. Configurar monit: https://www.mmonit.com/monit/documentation/monit.html
+3. Monitorear con monit. Probar CHECK PROCESS vs CHECK HOST. Hacer que reinicie si el proceso muere, y luego si deja de responder.
+
+```monit
+# /etc/monit/conf.d/myserver.conf
+
+CHECK PROCESS <unique name> <PIDFILE <path> | MATCHING <regex>>
+
+# etc..
+```
+
+## Configurar upstart
+
+```upstart
+# en /etc/init/myserver.conf
+
+description "MyServer configuration"
+author "IASC"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+
+script
+  #...iniciar el servidor...
+end script
+```
+
+
