@@ -1,2 +1,2 @@
 rvm_trust_rvmrcs_flag=1
-rvm use ruby-3.1.1@iasc-infra --create
+rvm use ruby-3.0.0@iasc-infra --create
